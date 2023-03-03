@@ -91,17 +91,16 @@ The amount values in the ration are calculated to actual loading and unloading a
 
 ```
 // 1. Calculate freshmass sum of total loading by sum up the Pens:
-total_loading_amount = sum(pens[].feedIntakePerAnimalKg * pens[].numberOfAnimals)
+total_loading_amount = sum(RATION.pen_allocations[].feed_intake_per_animal * INTERNAL.pens[].number_of_animals)
 
 // 2. Calculate freshmass sum of ration advice
-total_ration_amount = sum(rationFeedstuffs[].amountAsFed)
+total_ration_amount = sum(RATION.feedstuffs[].amount_drymatter / RATION.feedstuffs[].drymatter_percentage)
 
 // 3. Scale up each single feedstuff with the total loading-amount
-loading.ingredients[].calculatedAmountKg = rationFeedstuffs[].amountAsFed / total_ration_amount * total_loading_amount
+loadings[].feedstuffs[].calculated_amount_kg = (RATION.feedstuffs[].amount_drymatter / RATION.feedstuffs[].drymatter_percentage) / total_ration_amount * total_loading_amount / INTERNAL.number_loadings_per_day * INTERNAL.other-correction-factors
 
 // 4. Unloading-amounts are just used from the pens list
-unloadings[].calculatedAmountKg = pens[].feedIntakePerAnimal * pens[].numberOfAnimals
-
+unloadings[].calculated_amount_kg = RATION.pens[].feed_intake_per_animal * INTERNAL.pens[].number_of_animals / INTERNAL.number_loadings_per_day * INTERNAL.other-correction-factors
 ```
 
 <h3>Validation</h3>
